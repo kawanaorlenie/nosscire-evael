@@ -5,9 +5,10 @@
 ### Dining Philosophers
 
 [resource hierarchy solution - not so beautiful](src/main/java/com/example/multithreading/DiningPhilosophers.java)
+
 [resource hierarchy solution - with Lock](src/main/java/com/example/multithreading/DiningPhilosophersWithLock.java)
 
-[Dining Philosophers](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
+[Dining Philosophers in wikipedia](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
 
 ### Complexity
 
