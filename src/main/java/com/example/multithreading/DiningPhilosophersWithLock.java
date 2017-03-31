@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningPhilosophersWithLock {
@@ -45,34 +44,38 @@ class Philosopher implements Runnable {
 	public void run() {
 		boolean eaten = false;
 		while (!eaten) {
-			lower.pickUp(id);
-			higher.pickUp(id);
-			System.out.println(id);
-			eaten = true;
-			higher.putDown(id);
-			lower.putDown(id);
-		}
+			lower.lock();
+			try {
+				System.out.println("philosopher " + id + " picked up fork " + lower.getId());
+				higher.lock();
+				try {
+					System.out.println("philosopher " + id + " picked up fork " + higher.getId());
+					System.out.println("philosopher " + id + " is eating");
+					try {
+						Thread.sleep((long) (100 * Math.random()));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					eaten = true;
+					System.out.println("philosopher " + id + " put down fork " + higher.getId());
+				} finally {
+					higher.unlock();
+				}
+				System.out.println("philosopher " + id + " put down fork " + lower.getId());
+			} finally {
+				lower.unlock();
+			}
 
+		}
 	}
 }
 
-class Fork {
+class Fork extends ReentrantLock {
 
 	private int id;
-	private Lock lock = new ReentrantLock();
 
 	public Fork(int id) {
 		this.id = id;
-	}
-
-	public synchronized void pickUp(int philosopherId) {
-		lock.lock();
-		System.out.println("philosopher " + philosopherId + " picked up fork " + id);
-	}
-
-	public synchronized void putDown(int philosopherId) {
-		System.out.println("philosopher " + philosopherId + " put down fork " + id);
-		lock.unlock();
 	}
 
 	public int getId() {
