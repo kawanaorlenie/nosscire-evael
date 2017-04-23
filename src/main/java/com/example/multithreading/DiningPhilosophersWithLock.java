@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningPhilosophersWithLock {
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		int philosophersCount = 5;
 		List<Fork> forks = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class DiningPhilosophersWithLock {
 		if (es != null) {
 			es.shutdown();
 		}
-	}
+	}*/
 }
 
 class Philosopher implements Runnable {
